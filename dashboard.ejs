@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title><%= title %></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="../js/validation.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+
+
+
+</head>
+
+<body>
+  <nav class="navbar navbar-dark bg-primary" style="background-color:#007bff;">
+    <div class="container-fluid">
+      <h3 style="color: white; ">Client-Server Communication Application</h3>
+    </div>
+  </nav>
+
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="dashboard"><i class="fab fa-dashcube"></i> Dashboard</a>
+  </div>
+  <span onclick="openNav()">&#9776;</span>
+
+  <br><br>
+
+  <div class="container">
+
+    <hr style="height: 0.3px; border-width:0;color:white;background-color:white">
+
+    <div>
+      <h6 style="color: white; font-weight: bold;">Home &#8811; Dashboard</h6>
+    </div>
+
+    <br>
+    <table class="table table-dark table-striped">
+      <h4 style="color: white; ">Client's status Details : </h4>
+      <thead class="table-dark" style="background-color: rgba(47, 45, 45, 0.914);">
+        <tr>
+          <th>Client Name</th>
+          <th>IP Address</th>
+          <th>PORT</th>
+          <th style="width: 10%;">Status</th>
+        </tr>
+      </thead>
+      <tbody id="datas">
+      </tbody>
+    </table>
+
+  </div>
+  <script>
+    var eventSource = new EventSource("/sse");
+    eventSource.addEventListener("message", (e) => {
+      try {
+        //document.getElementById('#j').innerHTML = sachin;
+        var data = JSON.parse(e.data);
+
+        var table = document.getElementById("datas");
+        table.innerHTML = "";
+        var tr = "";
+        data.forEach(element => {
+          tr += '<tr>';
+          tr += '<td>' + element.name + '</td>' + '<td>' + element.ipadd + '</td>' +'<td>' + element.port + '</td>' + `<td id=${element.status==="OFFLINE"?'bg-red':'bg-green'}>` + element.status + '</td>'
+          tr += '</tr>'
+
+        })
+        table.innerHTML += tr;
+
+      } catch (error) {
+
+      }
+    })
+  </script>
+</body>
+
+</html>

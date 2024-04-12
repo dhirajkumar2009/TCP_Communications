@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title><%= title %></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="../js/validation.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-dark bg-primary" style="background-color:#007bff;">
+    <div class="container-fluid">
+      <h3 style="color: white; ">Client-Server Communication Application</h3>
+    </div>
+  </nav>
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
+    <a href="dashboard"><i class="fab fa-dashcube"></i> Dashboard</a>
+  </div>
+  <span onclick="openNav()">&#9776;</span>
+
+  <br><br>
+  <div class="container" style="width: 63%;">
+    <% if(alert == "errorAlert"){%>
+    <div class="alert alert-danger alert-dismissible fade show" style="background-color: rgb(204, 70, 70)"><strong><%= messageType %></strong><%= message%>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true" style="color: black">&times;</span>
+      </button></div><%}%>
+  <% if(alert == "successAlert"){%>
+    <div class="alert alert-success alert-dismissible fade show"><strong><%= messageType %></strong><%= message%>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true" style="color: black">&times;</span>
+      </button></div><%}%>
+  <div style="display: flex;">
+   <div><a class="btn btn-sm btn-primary dropbtn" id = "regbutton" data-toggle="modal" data-target="#registerModal">Register</a></div>
+  </div>
+
+  <!-- Modal begin for register-->
+  <div class="modal fade" id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+        
+      <!-- Modal content for register-->
+      <div class="modal-content" style="background-color: #6c757d;">
+        <div class="modal-header">
+          
+          <h3 class="modal-title"><%= title %></h3>
+  </div>
+  <div class="modal-body">
+    <form name="form1" action="save" method="post" onsubmit="return validateIpAddress(document.form1.ipadd)">
+      <div class="form-group">
+        <label for="name">Client Name:</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter Client name" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="IP">IP Addess:</label>
+        <input type="text" class="form-control" id="ipadd" placeholder="Enter IP Address" name="ipadd" required>
+      </div>
+
+      <div class="form-group">
+        <label for="port">PORT:</label>
+        <input type="text" class="form-control" id="pwd" name="port" value="<%= port_no %>"
+          style="background-color: rgb(183, 180, 180);" disabled>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="reset" class="btn btn-primary">Reset</button>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  </div>
+  </div>
+
+  <!-- Modal content for register ends here..................-->
+
+  </div>
+
+  </div>
+
+  <!-- Modal ends for register...................-->
+
+
+  <!-- Modal begin for update-->
+  <div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content for update-->
+      <div class="modal-content" style="background-color: #6c757d;">
+        <div class="modal-header">
+
+          <h3 class="modal-title"><%= title %></h3>
+        </div>
+        <div class="modal-body">
+          <form name="form2" action="edit" method="post" onsubmit="return validateIpAddress(document.form2.ipadd)">
+            <input type="hidden" class="valueId" value="" name="id">
+            <input type="hidden" class="valueStatus" value="" name="status">
+            <div class="form-group">
+              <label for="name">Client Name:</label>
+              <input type="text" class="form-control valueusername" id="name" value="" name="name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="IP">IP Addess:</label>
+              <input type="text" class="form-control valueIp" id="ipadd" value="" name="ipadd" required>
+            </div>
+
+            <div class="form-group">
+              <label for="port">PORT:</label>
+              <input type="text" class="form-control" id="pwd" name="port" value="<%= port_no %>"
+                style="background-color: rgb(183, 180, 180);" disabled>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-primary">Reset</button>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+      <!-- Modal content for update ends here..................-->
+
+    </div>
+
+  </div>
+
+  <!-- Modal ends for update...................-->
+
+
+
+  <!-- Modal begin for delete-->
+  <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content for delete-->
+      <div class="modal-content" style="background-color: #6c757d;">
+        <div class="modal-header">
+
+          <h3 class="modal-title"><%= title %></h3>
+        </div>
+        <div class="modal-body">
+          <form name="form3" action="deleteClient" method="post">
+            <input type="hidden" class="valueId" value="" name="id">
+            <input type="hidden" class="valueStatus" value="" name="status">
+            <div class="form-group">
+              <label for="name" style="color: rgb(14, 14, 14);">Are you sure to delete the client  ?</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Delete</button>
+
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+      <!-- Modal content for delete ends here..................-->
+
+    </div>
+
+  </div>
+
+  <!-- Modal ends for delete...................-->
+
+
+
+  <hr style="height: 0.3px; border-width:0;color:white;background-color:white">
+  <h6 style="color: white; font-weight: bold;">Home</h6>
+  <br>
+  <table class="table table-dark table-striped">
+    <h4 style="color: white; ">Registered Client Details : </h4>
+    <thead class="table-dark" style="background-color: rgba(47, 45, 45, 0.914);">
+      <tr>
+        <th style="width: 30%;">Client Name</th>
+        <th style="width: 30%;">IP Address</th>
+        <th style="width: 12%;">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(function(user){ %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.ipadd %></td>
+        <td>
+          <a type="button" class="btn btn-sm btn-primary dropbtn" data-toggle="modal" data-target="#myModal"
+            userIP="<%= user.ipadd %>" userName="<%=user.name %>" userId="<%= user.id %>"
+            userStatus=<%= user.status %>>Update</a>
+          <a type="button" class="btn btn-sm btn-danger dropbtn" data-toggle="modal" data-target="#deleteModal"
+            userId="<%= user.id %>" userStatus=<%= user.status %>>Delete</a>
+
+        </td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- Java srcipt for setting the value in the fields which pops out in case of update.-->
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('.dropbtn').click(function () {
+        var username = $(this).attr('userName');
+        var userIp = $(this).attr('userIP');
+        var userId = $(this).attr('userId');
+        var userStatus = $(this).attr('userStatus');
+        $('.valueIp').val(userIp);
+        $('.valueusername').val(username);
+        $('.valueId').val(userId);
+        $('.valueStatus').val(userStatus);
+
+
+
+      })
+    })
+  </script>
+
+</body>
+
+</html>
